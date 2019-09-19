@@ -1,5 +1,7 @@
 package tdd;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
@@ -18,6 +20,7 @@ public class SignUpScripts {
     public PageController webApp;
 
     String emailMsg = "Enter valid email";
+    String step2Title = "Add your address";
     protected JSWaiter waiter;
 
     public SignUpScripts() throws Exception {
@@ -37,11 +40,18 @@ public class SignUpScripts {
         driver = new DriverManager(capabilities, browser, driverPath).createDriver();
         //Send driver object to JSWaiter Class
         waiter = new JSWaiter(driver);
-        //Maximize Window
-//        driver.manage().window().maximize();
-        driver.manage().window().fullscreen();
-//        Dimension d = new Dimension(1920,1080);
-//        driver.manage().window().setSize(d);
+
+        if (platform.contains("mac")) {
+            Point targetPoint = new Point(0, 0);
+            driver.manage().window().setPosition(targetPoint);
+            Dimension d = new Dimension(1250, 900);
+            driver.manage().window().setSize(d);
+        }
+        if (platform.contains("windows")) {
+            driver.manage().window().maximize();
+//        } else {
+//            driver.manage().window().fullscreen();
+        }
         webApp = new PageController(driver);
     }
 
@@ -82,6 +92,8 @@ public class SignUpScripts {
         webApp.getSignUpPage().selectYear();
         webApp.getSignUpPage().selectGender();
         webApp.getSignUpPage().clickNextBtn();
+        String step2Title = webApp.getSignUpPage().getTextStep2().trim();
+        Assert.assertEquals(step2Title, step2Title);
     }
 
 }

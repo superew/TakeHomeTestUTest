@@ -34,6 +34,8 @@ public class SignUpPage extends BasePage {
 
     private static final By EMAIL_ERROR_MSG = By.cssSelector("span#emailError");
 
+    private static final By STEP2_PAGE = By.cssSelector("h1.step-title span.sub-title");
+
     String firstName = "Andrew";
     String lastName = "Nguyen";
     String emailAdd = randomEmailAddress(5);
@@ -151,6 +153,16 @@ public class SignUpPage extends BasePage {
             Log.debug("Click Next Button to Step 2");
             waitForElementIsVisible(NEXT_BTN);
             clickElement(NEXT_BTN);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public String getTextStep2() throws Exception {
+        try {
+            Log.debug("Get text Step 2");
+            waitForElementIsVisible(STEP2_PAGE);
+            return readText(STEP2_PAGE);
         } catch (Exception e) {
             throw e;
         }
