@@ -7,4 +7,4 @@ To run the script:
 3. Add 3 parameters:
   - browser - chrome
   - platform - windows
-  - driverPath - "path for google chrome"
+  - driverPath - "path for chromedriver"
